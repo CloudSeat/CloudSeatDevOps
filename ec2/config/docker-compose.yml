@@ -1,0 +1,10 @@
+version: '2'
+services:
+  KMFServices:
+    image: 950643724785.dkr.ecr.us-west-2.amazonaws.com/angular-test:dev-3
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./KMFServices.env
+    mem_limit: 126870912
+    cpu_shares: 512

@@ -1,0 +1,28 @@
+{
+    "LoadBalancerName": "hello-world-python-dev", 
+    "Listeners": [
+        {
+            "Protocol": "HTTP", 
+            "LoadBalancerPort": 80, 
+            "InstanceProtocol": "HTTP", 
+            "InstancePort": 5000
+        }
+    ], 
+    "Subnets": [
+        "subnet-efe97aa6"
+    ], 
+    "SecurityGroups": [
+        "sg-c67cd0bd"
+    ], 
+    "Scheme": "internet-facing", 
+    "Tags": [
+        {
+            "Key": "Name", 
+            "Value": "ECS Service Load Balancer for hello-world-python"
+        },
+        {
+            "Key": "Creator",
+	    "Value": "EAndre"
+	}
+    ]
+}
