@@ -9,10 +9,10 @@
         }
     ], 
     "Subnets": [
-        "subnet-efe97aa6"
+        "subnet-b445cdfd"
     ], 
     "SecurityGroups": [
-        "sg-c67cd0bd"
+        "sg-8672c5fd"
     ], 
     "Scheme": "internet-facing", 
     "Tags": [

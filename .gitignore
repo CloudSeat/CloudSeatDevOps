@@ -1,0 +1,6 @@
+
+ec2/\.ecs/
+
+ec2/\.cache/ecs-cli/tdcache/
+
+*.pem

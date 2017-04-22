@@ -9,7 +9,7 @@
             "containerPort": 5000
         }
     ], 
-    "desiredCount": 3, 
+    "desiredCount": 2, 
     "role": "ecsServiceRole", 
     "deploymentConfiguration": {
         "maximumPercent": 100, 

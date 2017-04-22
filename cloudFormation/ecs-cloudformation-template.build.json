@@ -98,11 +98,6 @@
       "Description" : "Optional - Security Group port to open on ECS instances - defaults to port 80",
       "Default" : "80"
     },
-    "SshPort" : {
-      "Type" : "String",
-      "Description" : "Optional - Security Group port to open on ECS instances for SSH connection - defaults to port 22",
-      "Default" : "22"
-    },
     "VpcAvailabilityZones": {
       "Type": "CommaDelimitedList",
       "Description": "Optional - Comma-delimited list of VPC availability zones in which to create subnets.  Required if setting VpcId.",
@@ -116,7 +111,7 @@
     "DockerVolumeSize" : {
       "Type": "Number",
       "Description": "Volume Size for docker",
-      "Default": "22"
+      "Default": "199"
     }
   },
   "Conditions": {
@@ -338,12 +333,7 @@
             "FromPort" : { "Ref" : "EcsPort" },
             "ToPort" : { "Ref" : "EcsPort" },
             "CidrIp" : { "Ref" : "SourceCidr" } 
-        },{
-            "IpProtocol" : "tcp",
-            "FromPort" : { "Ref" : "SshPort" },
-            "ToPort" : { "Ref" : "SshPort" },
-            "CidrIp" : { "Ref" : "SourceCidr" } 
-        }  ]
+        } ]
       }
     },
     "EcsInstancePolicy": {
@@ -410,7 +400,7 @@
         },
         "BlockDeviceMappings" : [ {
             "DeviceName" : "/dev/xvda",
-            "Ebs" : {"VolumeSize" : "10"}
+            "Ebs" : {"VolumeSize" : "50"}
           }, {
             "DeviceName" : "/dev/xvdcz",
             "Ebs" : {"VolumeSize" : {
