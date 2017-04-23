@@ -4,3 +4,9 @@ ec2/\.ecs/
 ec2/\.cache/ecs-cli/tdcache/
 
 *.pem
+
+ecr/\.ecs/config
+
+ecr/\.cache/ecs-cli/tdcache/
+
+\.ecs/

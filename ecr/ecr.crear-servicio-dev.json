@@ -1,11 +1,11 @@
 {
     "cluster": "dev", 
-    "serviceName": "eandre-hello-world-python-dev", 
-    "taskDefinition": "eandre-hello-world-python-dev", 
+    "serviceName": "eandre-ecr", 
+    "taskDefinition": "eandre-ecr", 
     "loadBalancers": [
         {
             "loadBalancerName": "hello-world-python-dev", 
-            "containerName": "hello-world-python-container", 
+            "containerName": "eandre-hello-world-python-dev", 
             "containerPort": 5000
         }
     ], 
