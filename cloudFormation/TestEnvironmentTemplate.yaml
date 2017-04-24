@@ -1,0 +1,90 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Mobile Services Environment Template
+Parameters:
+  # General Parameters
+  # The Environment variable is used to name the resources created
+  Environment:
+    Type: String
+    AllowedValues:
+      - "DEV"
+      - "INT"
+      - "PROD"
+    Default: "PROD"
+    Description: "The environment name used to create the resources. Valid values are DEV, INT or PROD. Default value is PROD"
+  AvailabilityZone:
+    Type: AWS::EC2::AvailabilityZone::Name
+    Default: "us-west-2b"
+    Description: "The zone where the resources will be created. Ex: us-west-2b"
+Mappings: 
+  EnvironmentMap: 
+    PROD: 
+      LowerCase: "prod"
+      CamelCase: "Prod"
+    INT: 
+      LowerCase: "int"
+      CamelCase: "Int"
+    DEV: 
+      LowerCase: "dev"
+      CamelCase: "Dev"
+Resources:
+  # Gateway APIS
+  # Mobile Services Gateway
+  MobileServicesStage:  
+    Type: "AWS::ApiGateway::Stage"
+    Properties:
+      DeploymentId: 
+        !Ref MobileServicesDeployment
+      Description: "Prod deployment stage for Mobile Services"
+      RestApiId: !Ref "MobileServicesAPI"        
+      StageName: !Ref "Environment"
+      Variables:
+        "host": "TestHost"
+  MobileServicesDeployment:
+    Type: "AWS::ApiGateway::Deployment"
+    Properties:
+      Description: "Mobile Services Cloud Formation Deployment"
+      RestApiId: !Ref "MobileServicesAPI"
+    DependsOn:
+      - MobileServicesAPI
+      - MobileServicesMethod
+  MobileServicesAPIKey:
+    Type: "AWS::ApiGateway::ApiKey"
+    Properties: 
+      Description: "API Key for Mobile Services"
+      Enabled: "true"
+      Name: !Sub "MobileServicesKey${Environment}"
+      StageKeys:
+        - RestApiId: !Ref "MobileServicesAPI"
+          StageName: !Ref "MobileServicesStage"
+    DependsOn:
+      - MobileServicesAPI
+      - MobileServicesStage
+      - MobileServicesDeployment
+  MobileServicesAPI:
+    Type: "AWS::ApiGateway::RestApi"
+    Properties:
+      Name: !Sub "MobileServicesAPI${Environment}"
+  MobileServicesResource: 
+    Type: "AWS::ApiGateway::Resource"
+    Properties: 
+      RestApiId: !Ref "MobileServicesAPI"
+      ParentId: !GetAtt MobileServicesAPI.RootResourceId
+      PathPart: "{proxy+}"
+  MobileServicesMethod: 
+    Type: "AWS::ApiGateway::Method"
+    Properties:
+      ApiKeyRequired: "true"
+      RestApiId: !Ref "MobileServicesAPI"
+      ResourceId: !Ref "MobileServicesResource"
+      RequestParameters:
+        method.request.path.proxy: "true"
+        method.request.header.Accept-Encoding: "true"
+      HttpMethod: "ANY"
+      AuthorizationType: "NONE"
+      Integration: 
+        Type: "HTTP_PROXY"
+        Uri: "http://${stageVariables.host}/MobileServices/{proxy}"
+        IntegrationHttpMethod: "ANY"
+        RequestParameters:
+          integration.request.path.proxy: "method.request.path.proxy"
+          integration.request.header.Accept-Encoding: "'None'"

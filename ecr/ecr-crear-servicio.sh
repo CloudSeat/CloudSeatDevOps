@@ -14,14 +14,14 @@ servicioPrefijo=$2
 
 [ -f docker-compose.yml ] || { echo "No se encuentra el archivo docker-compose.yml o docker-compose.noversion.yml. Abortando"; exit 1; }
 
-ECR_SERVICIO_NOMBRE=$(jq -r .serviceName <$servicioJson)
-ECR_CLUSTER=$(jq -r .ECR_CLUSTER <$servicioJson)
+servicioNombre=$(jq -r .serviceName <$servicioJson)
+cluster=$(jq -r .cluster <$servicioJson)
 
-ecs-cli configure --region us-west-2 --ECR_CLUSTER ECR_CLUSTER --compose-project-name-prefix $servicioPrefijo- --compose-service-name-prefix ${servicioPrefijo}- --cfn-stack-name-prefix ecsagent-cli-
+ecs-cli configure --region us-west-2 --ECR_CLUSTER cluster --compose-project-name-prefix $servicioPrefijo- --compose-service-name-prefix ${servicioPrefijo}- --cfn-stack-name-prefix ecsagent-cli-
 
-ECR_SERVICIO_JSON=`aws ecs describe-services --ECR_CLUSTER=$ECR_CLUSTER --services $ECR_SERVICIO_NOMBRE`
-ECR_SERVICIO_EXISTE=`echo $ECR_SERVICIO_JSON |jq -r ".services[].serviceName==\"$ECR_SERVICIO_NOMBRE\" and .services[].status==\"ACTIVE\""`
-if [ "$ECR_SERVICIO_EXISTE" != "true" ]; then
+servicio=`aws ecs describe-services --ECR_CLUSTER=$cluster --services $servicioNombre`
+servicioExiste=`echo $servicio | jq -r ".services[].serviceName==\"$servicioNombre\" and .services[].status==\"ACTIVE\""`
+if [ "$servicioExiste" != "true" ]; then
   echo "Creando servicio"
   ecs-cli compose create
   aws ecs create-service --cli-input-json "`cat $servicioJson`"
@@ -29,9 +29,9 @@ if [ "$ECR_SERVICIO_EXISTE" != "true" ]; then
 fi
 
 # Escalando el servicio al número de tareas deseadas
-ECR_SERVICIO_NUMERO_TAREAS=$(jq -r .desiredCount <$servicioJson)
-if [ $ECR_SERVICIO_NUMERO_TAREAS -gt 0 ]; then
+numeroTareas=$(jq -r .desiredCount <$servicioJson)
+if [ $numeroTareas -gt 0 ]; then
 	ecs-cli compose service up
 fi
-ecs-cli compose service scale $ECR_SERVICIO_NUMERO_TAREAS
+ecs-cli compose service scale $numeroTareas
 

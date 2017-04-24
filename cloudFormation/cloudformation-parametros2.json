@@ -1,0 +1,12 @@
+[
+  {
+    "ParameterKey": "AvailabilityZone",
+    "ParameterValue": "us-west-2b",
+    "UsePreviousValue": false
+  },
+  {
+    "ParameterKey": "Environment",
+    "ParameterValue": "PROD",
+    "UsePreviousValue": false
+  }
+]
