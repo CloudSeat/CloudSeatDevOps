@@ -88,3 +88,5 @@ Resources:
         RequestParameters:
           integration.request.path.proxy: "method.request.path.proxy"
           integration.request.header.Accept-Encoding: "'None'"
+Outputs:
+

@@ -12,16 +12,16 @@ stackNombre=$1
 templateJson=$2
 parametrosJson=$3
 
-# Validar si el stack existe
-if ! aws cloudformation describe-stacks --stack-name $stackNombre; then
+tackStatus
+if ! aws cloudformation describe-stacks --stack-name $stackNombre 2>>/var/log/aws-entorno.log; then
   aws cloudformation create-stack --stack-name $stackNombre\
     --template-body "`cat $templateJson`"\
     --capabilities CAPABILITY_IAM\
-    --parameters "`cat $parametrosJson`"
+    --parameters "`cat $parametrosJson`"\
+     >>/var/log/aws-entorno.log 2>&1
   aws cloudformation wait stack-create-complete --stack-name $stackNombre
-  creadoCorrectamente=$?
 else
-# Si existe, validar si hay diferencias entre el stack existent con los parametros del script
+  # Si existe, validar si hay diferencias entre el stack existent con los parametros del script
   aws cloudformation get-template --stack-name $stackNombre |jq -S .TemplateBody >/tmp/cf.stack.$stackNombre.aws.template.json
   jq -S . <$templateJson >/tmp/cf.stack.$stackNombre.local.template.json
   aws cloudformation describe-stacks --stack-name $stackNombre| jq -r '.Stacks[0].Parameters[]| .ParameterKey + "=" + .ParameterValue'|sort >/tmp/cf.stack.$stackNombre.aws.parameters.env
@@ -34,11 +34,8 @@ else
       --capabilities CAPABILITY_IAM\
       --parameters "`cat $parametrosJson`"
     aws cloudformation wait stack-update-complete --stack-name $stackNombre
-    creadoCorrectamente=$?
-  else
-    echo "No se encontraron diferencias"
-    creadoCorrectamente=$?
   fi
 fi
-#aws cloudformation describe-stack-resources --stack-name $stackNombre | tee /etc/gmi/cf.stack.$stackNombre.resources.json
-exit $creadoCorrectamente
+stackResultado=`aws cloudformation describe-stacks --stack-name $stackNombre`
+stackOutput=`echo $stackResultado | jq -r ".Stacks[0].Outputs"`
+echo $stackOutput

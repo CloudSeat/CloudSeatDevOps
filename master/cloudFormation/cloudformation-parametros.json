@@ -1,0 +1,52 @@
+[
+  {
+    "ParameterKey": "EcsAmiId",
+    "ParameterValue": "ami-62d35c02",
+    "UsePreviousValue": false
+  },
+  {
+    "ParameterKey": "DockerVolumeSize",
+    "ParameterValue": "22",
+    "UsePreviousValue": false
+  },
+  {
+    "ParameterKey": "AsgMaxSize",
+    "ParameterValue": "2",
+    "UsePreviousValue": false
+  },
+  {
+    "ParameterKey": "EcsCluster",
+    "ParameterValue": "dev",
+    "UsePreviousValue": false
+  },
+  {
+    "ParameterKey": "EcsInstanceType",
+    "ParameterValue": "t2.micro",
+    "UsePreviousValue": false
+  },
+  {
+    "ParameterKey": "EcsPort",
+    "ParameterValue": "5000",
+    "UsePreviousValue": false
+  },
+  {
+    "ParameterKey": "KeyName",
+    "ParameterValue": "my-ec2-key-pair",
+    "UsePreviousValue": false
+  },
+  {
+    "ParameterKey": "SourceCidr",
+    "ParameterValue": "0.0.0.0/0",
+    "UsePreviousValue": false
+  },
+  {
+    "ParameterKey": "SshPort",
+    "ParameterValue": "2",
+    "UsePreviousValue": false
+  },
+  {
+    "ParameterKey": "VpcAvailabilityZones",
+    "ParameterValue": "us-west-2b",
+    "UsePreviousValue": false
+  }
+]

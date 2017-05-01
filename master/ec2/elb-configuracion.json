@@ -1,0 +1,22 @@
+{
+    "LoadBalancerName": "python-test-elb", 
+    "Listeners": [
+        {
+            "Protocol": "HTTP", 
+            "LoadBalancerPort": 80, 
+            "InstanceProtocol": "HTTP", 
+            "InstancePort": 5000
+        }
+    ], 
+    "Scheme": "internet-facing", 
+    "Tags": [
+        {
+            "Key": "Name", 
+            "Value": "Load Balancer para ECS"
+        },
+        {
+            "Key": "Creator",
+	    "Value": "EAndre"
+	}
+    ]
+}

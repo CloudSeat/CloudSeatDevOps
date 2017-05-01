@@ -1,11 +1,11 @@
 {
-    "cluster": "dev", 
-    "serviceName": "eandre-ecr", 
-    "taskDefinition": "eandre-ecr", 
+    "cluster": "prod", 
+    "serviceName": "prod-ecr", 
+    "taskDefinition": "prod-ecr", 
     "loadBalancers": [
         {
-            "loadBalancerName": "hello-world-python-dev", 
-            "containerName": "eandre-hello-world-python-dev", 
+            "loadBalancerName": "python-test-elb", 
+            "containerName": "prod-hello-world-python-dev", 
             "containerPort": 5000
         }
     ], 

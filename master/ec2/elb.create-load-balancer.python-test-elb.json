@@ -1,0 +1,28 @@
+{
+    "LoadBalancerName": "python-test-elb", 
+    "Listeners": [
+        {
+            "Protocol": "HTTP", 
+            "LoadBalancerPort": 80, 
+            "InstanceProtocol": "HTTP", 
+            "InstancePort": 5000
+        }
+    ], 
+    "Subnets": [
+        "subnet-b445cdfd"
+    ], 
+    "SecurityGroups": [
+        "sg-8672c5fd"
+    ], 
+    "Scheme": "internet-facing", 
+    "Tags": [
+        {
+            "Key": "Name", 
+            "Value": "ECS Service Load Balancer"
+        },
+        {
+            "Key": "Creator",
+	    "Value": "EAndre"
+	}
+    ]
+}

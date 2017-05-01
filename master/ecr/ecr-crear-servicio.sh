@@ -25,13 +25,13 @@ if [ "$servicioExiste" != "true" ]; then
   echo "Creando servicio"
   ecs-cli compose create
   aws ecs create-service --cli-input-json "`cat $servicioJson`"
-	ecs-cli compose service create
+  ecs-cli compose service create
 fi
 
 # Escalando el servicio al número de tareas deseadas
 numeroTareas=$(jq -r .desiredCount <$servicioJson)
 if [ $numeroTareas -gt 0 ]; then
-	ecs-cli compose service up
+  ecs-cli compose service up
 fi
 ecs-cli compose service scale $numeroTareas
 

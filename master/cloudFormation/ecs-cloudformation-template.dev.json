@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "AWS CloudFormation template to create resources required to run tasks on an ECS cluster with custom Docker volume size.",
+  "Description": "AWS CloudFormation template para crear los recursos requeridos para correr tareas en un ECS cluster",
   "Mappings": {
     "VpcCidrs": {
       "vpc": {"cidr" : "10.0.0.0/16"},
@@ -16,7 +16,7 @@
     },
     "EcsInstanceType": {
       "Type": "String",
-      "Description": "ECS EC2 instance type",
+      "Description": "Tipo de instancia ECS EC2",
       "Default": "t2.micro",
       "AllowedValues": [
         "t2.nano",
@@ -59,63 +59,63 @@
         "d2.4xlarge",
         "d2.8xlarge"
       ],
-      "ConstraintDescription": "must be a valid EC2 instance type."
+      "ConstraintDescription": "Tiene que ser un tipo de instancia valido"
     },
     "KeyName": {
       "Type": "AWS::EC2::KeyPair::KeyName",
-      "Description": "Optional - Name of an existing EC2 KeyPair to enable SSH access to the ECS instances",
+      "Description": "Opcional - Nombre de un EC2 keypair existente",
       "Default": ""
     },
     "VpcId": {
       "Type": "String",
-      "Description": "Optional - VPC Id of existing VPC. Leave blank to have a new VPC created",
+      "Description": "Opcional - VPC Id de una VPC existente. Dejar en blanco para crear una nueva",
       "Default": "",
       "AllowedPattern": "^(?:vpc-[0-9a-f]{8}|)$",
-      "ConstraintDescription": "VPC Id must begin with 'vpc-' or leave blank to have a new VPC created"
+      "ConstraintDescription": "Los VPC Id tienen que empezar con'vpc-'"
     },
     "SubnetIds": {
       "Type": "CommaDelimitedList",
-      "Description": "Optional - Comma separated list of two (2) existing VPC Subnet Ids where ECS instances will run.  Required if setting VpcId.",
+      "Description": "Opcional - Lista de ids de Subnets existentes. Requeridos si se definió una VPC",
       "Default": ""
     },
     "AsgMaxSize": {
       "Type": "Number",
-      "Description": "Maximum size and initial Desired Capacity of ECS Auto Scaling Group",
+      "Description": "Cantidad de instancias del cluster",
       "Default": "1"
     },
     "SecurityGroup": {
       "Type": "String",
-      "Description": "Optional - Existing security group to associate the container instances. Creates one by default.",
+      "Description": "Opcional - ID de un grupo de seguridad existente. Dejar en blanco para crear uno",
       "Default": ""
     },
     "SourceCidr": {
       "Type": "String",
-      "Description": "Optional - CIDR/IP range for EcsPort - defaults to 0.0.0.0/0",
+      "Description": "Opcional - IP y puertos para habilitar en el grupo de seguridad - por default usa 0.0.0.0/0",
       "Default": "0.0.0.0/0"
     },
     "EcsPort" : {
       "Type" : "String",
-      "Description" : "Optional - Security Group port to open on ECS instances - defaults to port 80",
+      "Description" : "Opcional - Puertos para habilitar en el grupo de seguridad para la aplicación- por default usa 80",
       "Default" : "80"
     },
     "SshPort" : {
       "Type" : "String",
-      "Description" : "Optional - Security Group port to open on ECS instances for SSH connection - defaults to port 22",
+      "Description" : "Opcional - Puertos para habilitar en el grupo de seguridad para ssh- por default usa 22",
       "Default" : "22"
     },
     "VpcAvailabilityZones": {
       "Type": "CommaDelimitedList",
-      "Description": "Optional - Comma-delimited list of VPC availability zones in which to create subnets.  Required if setting VpcId.",
+      "Description": "Opcional - Id de la zona donde se quieren crear las instancias. Requeridos si se definió una VPC",
       "Default": ""
     },
     "EcsCluster" : {
       "Type" : "String",
-      "Description" : "ECS Cluster Name",
+      "Description" : "Nombre del ECS Cluster",
       "Default" : "default"
     },
     "DockerVolumeSize" : {
       "Type": "Number",
-      "Description": "Volume Size for docker",
+      "Description": "Tamaño de los discos de las instancias",
       "Default": "22"
     }
   },
@@ -219,41 +219,6 @@
         }
       }
     },
-    "PubSubnetAz2": {
-      "Condition": "CreateVpcResources",
-      "Type": "AWS::EC2::Subnet",
-      "Properties": {
-        "VpcId": {
-          "Ref": "Vpc"
-        },
-        "CidrBlock": {
-          "Fn::FindInMap": ["VpcCidrs", "pubsubnet2", "cidr"]
-        },
-        "AvailabilityZone": {
-          "Fn::If": [
-            "UseSpecifiedVpcAvailabilityZones",
-            {
-              "Fn::Select": [
-                "1",
-                {
-                  "Ref": "VpcAvailabilityZones"
-                }
-              ]
-            },
-            {
-              "Fn::Select": [
-                "1",
-                {
-                  "Fn::GetAZs": {
-                    "Ref": "AWS::Region"
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      }
-    },
     "InternetGateway": {
       "Condition": "CreateVpcResources",
       "Type": "AWS::EC2::InternetGateway"
@@ -305,23 +270,11 @@
         }
       }
     },
-    "PubSubnet2RouteTableAssociation": {
-      "Condition": "CreateVpcResources",
-      "Type": "AWS::EC2::SubnetRouteTableAssociation",
-      "Properties": {
-        "SubnetId": {
-          "Ref": "PubSubnetAz2"
-        },
-        "RouteTableId": {
-          "Ref": "RouteViaIgw"
-        }
-      }
-    },
     "EcsSecurityGroup": {
       "Condition": "CreateSecurityGroup",
       "Type": "AWS::EC2::SecurityGroup",
       "Properties": {
-        "GroupDescription": "ECS Allowed Ports",
+        "GroupDescription": "Puertos habilitados para ECS",
         "VpcId": {
           "Fn::If": [
             "CreateVpcResources",
@@ -502,9 +455,6 @@
                   [
                     {
                       "Ref": "PubSubnetAz1"
-                    },
-                    {
-                      "Ref": "PubSubnetAz2"
                     }
                   ]
                 ]
@@ -565,11 +515,25 @@
           },
           {
             "Key": "creator",
-            "Value": "puppet",
+            "Value": "eandre",
             "PropagateAtLaunch": "true"
           }
         ]
       }
     }
+  },
+  "Outputs" : {
+    "SubnetId" : {
+      "Description" : "ID de la subnet creada",
+      "Value" : {
+                  "Ref": "PubSubnetAz1"
+                }
+    },
+    "SecurityGroupId" : {
+      "Description" : "ID del grupo de seguridad creado",
+      "Value" : { 
+                  "Fn::GetAtt" : [ "EcsSecurityGroup", "GroupId" ] 
+                }
+    },
   }
 }

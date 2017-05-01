@@ -10,3 +10,9 @@ ecr/\.ecs/config
 ecr/\.cache/ecs-cli/tdcache/
 
 \.ecs/
+
+master/ec2/\.cache/ecs-cli/tdcache/
+
+*.swp
+
+master/ecr/\.cache/ecs-cli/tdcache/

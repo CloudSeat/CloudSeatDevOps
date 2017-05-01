@@ -7,4 +7,7 @@ command -v aws >/dev/null 2>&1 || { echo "No se encuentra el comando aws.  Abort
 clusterNombre=$1
 
 # Crear el cluster
-aws ecs create-cluster --cluster-name $clusterNombre
+clusterResultado=`aws ecs create-cluster --cluster-name $clusterNombre 2>>/var/log/aws-entorno.log`
+
+# Retornar el estado de la última llamada
+echo $?
