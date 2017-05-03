@@ -6,20 +6,10 @@ command -v aws >/dev/null 2>&1 || { echo "No se encuentra el comando aws.  Abort
 [ -z "$1" ] && { echo "Parametro: \n$0 cfStackNombre"; exit 1; }
 cfStackNombre=$1
 
-echo "Eliminando stack"
+echo "$(date +'%d/%m/%Y %H:%M:%S') - Eliminando stack con nombre %stackNombre"
 # Eliminar el key pair
 aws cloudformation delete-stack --stack-name $cfStackNombre
 # Esperar a que se terminé de borrar el stack
 aws cloudformation wait stack-delete-complete --stack-name $cfStackNombre
-echo "Cloudformation stack eliminado correctamente"
-
-#stackStatus="DELETE_IN_PROGRESS"
-#while (stackStatus=="DELETE_IN_PROGRESS")
-#do
-#  stackStatus="DELETED"
-#  stackDescribe=`aws cloudformation describe-stacks --stack-name $cfStackNombre`
-#  stackStatus=`echo $stackDescribe | jq -r ".Stacks[].StackStatus"`
-#done
-
-
+echo "$(date +'%d/%m/%Y %H:%M:%S') - Cloudformation stack eliminado correctamente"
 

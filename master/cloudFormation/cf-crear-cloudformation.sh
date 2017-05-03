@@ -12,7 +12,6 @@ stackNombre=$1
 templateJson=$2
 parametrosJson=$3
 
-tackStatus
 if ! aws cloudformation describe-stacks --stack-name $stackNombre 2>>/var/log/aws-entorno.log; then
   aws cloudformation create-stack --stack-name $stackNombre\
     --template-body "`cat $templateJson`"\

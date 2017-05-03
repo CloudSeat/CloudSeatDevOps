@@ -12,12 +12,12 @@ clusterNombre=$2
 ECR_SERVICIO_JSON=`aws ecs describe-services --cluster=$clusterNombre --services $servicioNombre`
 ECR_SERVICIO_EXISTE=`echo $ECR_SERVICIO_JSON |jq -r ".services[].serviceName==\"$servicioNombre\""`
 if [ "$ECR_SERVICIO_EXISTE" == "true" ]; then
-  echo "Eliminando servicio"
+  echo "$(date +'%d/%m/%Y %H:%M:%S') - Eliminando servicio con nombre $servicioNombre"
   # Bajando el número de tareas del servicio a 0 antes de eliminarlo
   aws ecs update-service --cluster $clusterNombre --service $servicioNombre --desired-count 0
   aws ecs delete-service --cluster $clusterNombre --service $servicioNombre
 else
-  echo "El servicio no existe"
+  echo "$(date +'%d/%m/%Y %H:%M:%S') - El servicio no existe"
 fi
 
 

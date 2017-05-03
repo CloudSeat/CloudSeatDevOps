@@ -16,7 +16,7 @@
   },
   {
     "ParameterKey": "EcsCluster",
-    "ParameterValue": "dev",
+    "ParameterValue": "prod",
     "UsePreviousValue": false
   },
   {
@@ -31,7 +31,7 @@
   },
   {
     "ParameterKey": "KeyName",
-    "ParameterValue": "my-ec2-key-pair",
+    "ParameterValue": "prod",
     "UsePreviousValue": false
   },
   {

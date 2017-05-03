@@ -1,7 +1,7 @@
 {
     "cluster": "prod", 
     "serviceName": "prod-ecr", 
-    "taskDefinition": "prod-ecr", 
+    "taskDefinition": "eandre-master", 
     "loadBalancers": [
         {
             "loadBalancerName": "python-test-elb", 
