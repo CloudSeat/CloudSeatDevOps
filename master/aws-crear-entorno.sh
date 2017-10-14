@@ -66,4 +66,5 @@ echo "$(date +'%d/%m/%Y %H:%M:%S') - Compilando proyecto $proyectoCarpeta"
 echo "$(date +'%d/%m/%Y %H:%M:%S') - Proyecto compilado correctamente y pusheado al repositorio $repoUri"
 
 echo "$(date +'%d/%m/%Y %H:%M:%S') - Creando servicio"
-./ecr/ecr-crear-servicio.sh $servicioJson $entornoNombre
+cd ecr/
+./ecr-crear-servicio.sh $servicioJson $entornoNombre

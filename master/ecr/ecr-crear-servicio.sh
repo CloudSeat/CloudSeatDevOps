@@ -12,14 +12,12 @@ set -x
 servicioJson=$1
 servicioPrefijo=$2
 
-[ -f docker-compose.yml ] || { echo "No se encuentra el archivo docker-compose.yml o docker-compose.noversion.yml. Abortando"; exit 1; }
-
 servicioNombre=$(jq -r .serviceName <$servicioJson)
 cluster=$(jq -r .cluster <$servicioJson)
 
-ecs-cli configure --region us-west-2 --ECR_CLUSTER cluster --compose-project-name-prefix $servicioPrefijo- --compose-service-name-prefix ${servicioPrefijo}- --cfn-stack-name-prefix ecsagent-cli-
+ecs-cli configure --region us-west-2 --cluster $cluster --compose-project-name-prefix $servicioPrefijo- --compose-service-name-prefix ${servicioPrefijo}- --cfn-stack-name-prefix ecsagent-cli-
 
-servicio=`aws ecs describe-services --ECR_CLUSTER=$cluster --services $servicioNombre`
+servicio=`aws ecs describe-services --cluster $cluster --services $servicioNombre`
 servicioExiste=`echo $servicio | jq -r ".services[].serviceName==\"$servicioNombre\" and .services[].status==\"ACTIVE\""`
 if [ "$servicioExiste" != "true" ]; then
   echo "Creando servicio"

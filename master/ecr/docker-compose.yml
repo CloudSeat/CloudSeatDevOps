@@ -1,10 +1,10 @@
 version: '2'
 services:
-  KMFServices:
-    image: 950643724785.dkr.ecr.us-west-2.amazonaws.com/python-test:dev-5
+  Grapes:
+    image: 950643724785.dkr.ecr.us-west-2.amazonaws.com/grapes:11
     ports:
-      - "9004:9004"
+      - "8080:8080"
     env_file:
-      - ./eandre-hello-world-python-dev.env
-    mem_limit: 536870912
-    cpu_shares: 512
+      - ./service.env
+    mem_limit: 836870912
+    cpu_shares: 1024

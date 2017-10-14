@@ -95,8 +95,8 @@
     },
     "EcsPort" : {
       "Type" : "String",
-      "Description" : "Opcional - Puertos para habilitar en el grupo de seguridad para la aplicación- por default usa 80",
-      "Default" : "5000"
+      "Description" : "Opcional - Puertos para habilitar en el grupo de seguridad para la aplicación- por default usa 8080",
+      "Default" : "8080"
     },
     "SshPort" : {
       "Type" : "String",
@@ -298,8 +298,8 @@
             "CidrIp" : { "Ref" : "SourceCidr" } 
         },{
              "IpProtocol" : "tcp",
-             "FromPort" : { "80" },
-             "ToPort" : { "80" },
+             "FromPort" : "80",
+             "ToPort" : "80",
              "CidrIp" : { "Ref" : "SourceCidr" }
         }  ]
       }

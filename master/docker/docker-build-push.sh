@@ -15,8 +15,8 @@ tag="$2:$3"
 # Ir a la carpeta del proyecto, construir la imagen y pushear la imagen a aws
 cd $1
 
-docker build -t $tag .
-loginCommand=`aws ecr get-login`
+mvn package && docker build -t $tag .
+loginCommand=`aws ecr get-login --no-include-email`
 $loginCommand
 echo "docker push $tag"
 docker push $tag 

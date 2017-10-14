@@ -16,3 +16,5 @@ master/ec2/\.cache/ecs-cli/tdcache/
 *.swp
 
 master/ecr/\.cache/ecs-cli/tdcache/
+
+\.DS_Store

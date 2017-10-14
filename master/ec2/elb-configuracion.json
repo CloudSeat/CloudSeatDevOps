@@ -1,11 +1,11 @@
 {
-    "LoadBalancerName": "python-test-elb", 
+    "LoadBalancerName": "grapes-elb", 
     "Listeners": [
         {
             "Protocol": "HTTP", 
             "LoadBalancerPort": 80, 
             "InstanceProtocol": "HTTP", 
-            "InstancePort": 5000
+            "InstancePort": 8080
         }
     ], 
     "Scheme": "internet-facing", 

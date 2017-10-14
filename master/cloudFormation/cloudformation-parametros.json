@@ -26,7 +26,7 @@
   },
   {
     "ParameterKey": "EcsPort",
-    "ParameterValue": "5000",
+    "ParameterValue": "8080",
     "UsePreviousValue": false
   },
   {
@@ -41,7 +41,7 @@
   },
   {
     "ParameterKey": "SshPort",
-    "ParameterValue": "2",
+    "ParameterValue": "22",
     "UsePreviousValue": false
   },
   {
