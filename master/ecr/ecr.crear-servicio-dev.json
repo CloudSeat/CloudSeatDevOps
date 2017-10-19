@@ -4,8 +4,8 @@
     "taskDefinition": "prod-ecr", 
     "loadBalancers": [
         {
-            "loadBalancerName": "grapes-elb", 
-            "containerName": "Grapes", 
+            "loadBalancerName": "restservice-elb", 
+            "containerName": "RestService", 
             "containerPort": 8080
         }
     ], 

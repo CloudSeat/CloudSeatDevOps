@@ -1,13 +1,8 @@
-#!/bin/bash
+#!/bin/biash
 
-[ -z "$1" ] && { echo "Parametros: \n$0 repoNombre entornoNombre cfTemplateJson cfTemplateParams elbJson servicioJson proyectoCarpeta proyectoVersion"; exit 1; }
-[ -z "$2" ] && { echo "Parametros: \n$0 repoNombre entornoNombre cfTemplateJson cfTemplateParams elbJson servicioJson proyectoCarpeta proyectoVersion"; exit 1; }
-[ -z "$3" ] && { echo "Parametros: \n$0 repoNombre entornoNombre cfTemplateJson cfTemplateParams elbJson servicioJson proyectoCarpeta proyectoVersion"; exit 1; }
-[ -z "$4" ] && { echo "Parametros: \n$0 repoNombre entornoNombre cfTemplateJson cfTemplateParams elbJson servicioJson proyectoCarpeta proyectoVersion"; exit 1; }
-[ -z "$5" ] && { echo "Parametros: \n$0 repoNombre entornoNombre cfTemplateJson cfTemplateParams elbJson servicioJson proyectoCarpeta proyectoVersion"; exit 1; }
-[ -z "$6" ] && { echo "Parametros: \n$0 repoNombre entornoNombre cfTemplateJson cfTemplateParams elbJson servicioJson proyectoCarpeta proyectoVersion"; exit 1; }
-[ -z "$7" ] && { echo "Parametros: \n$0 repoNombre entornoNombre cfTemplateJson cfTemplateParams elbJson servicioJson proyectoCarpeta proyectoVersion"; exit 1; }
-[ -z "$8" ] && { echo "Parametros: \n$0 repoNombre entornoNombre cfTemplateJson cfTemplateParams elbJson servicioJson proyectoCarpeta proyectoVersion"; exit 1; }
+parametros="Parametros: \n$0 repoNombre entornoNombre cfTemplateJson cfTemplateParams elbJson servicioJson proyectoCarpeta proyectoVersion nombreElb"
+
+[ $# -lt 9 ] && { echo $parametros; exit 1; }
 
 repoNombre=$1
 entornoNombre=$2
@@ -17,6 +12,7 @@ elbJson=$5
 servicioJson=$6
 proyectoCarpeta=$7
 proyectoVersion=$8
+nombreElb=$9
 
 echo "$(date +'%d/%m/%Y %H:%M:%S') - Creando Repositorio con nombre $repoNombre"
 repoUri=`./ecr/ecr-crear-repositorio.sh $repoNombre`
@@ -58,7 +54,7 @@ echo "$(date +'%d/%m/%Y %H:%M:%S') - Creando ELB"
 # Obtenemos los ids de la subnet y del security group para crear el ELB
 securityGroupId=`echo $stackOutput | jq -r ".[0].OutputValue"`
 subnetId=`echo $stackOutput | jq -r ".[1].OutputValue"`
-elbSuccess=`./ec2/ec2-crear-elb.sh $elbJson $securityGroupId $subnetId`
+elbSuccess=`./ec2/ec2-crear-elb.sh $nombreElb $elbJson $securityGroupId $subnetId`
 echo "$(date +'%d/%m/%Y %H:%M:%S') - ELB creado correctamente"
 
 echo "$(date +'%d/%m/%Y %H:%M:%S') - Compilando proyecto $proyectoCarpeta"

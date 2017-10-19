@@ -1,5 +1,5 @@
 {
-    "LoadBalancerName": "grapes-elb", 
+    "LoadBalancerName": "grapes-elb2", 
     "Listeners": [
         {
             "Protocol": "HTTP", 

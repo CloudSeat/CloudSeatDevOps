@@ -1,9 +1,8 @@
 #!/bin/bash
 
-[ -z "$1" ] && { echo "Parametros: \n$0 repoNombre entornoNombre elbNombre servicioNombre"; exit 1; }
-[ -z "$2" ] && { echo "Parametros: \n$0 repoNombre entornoNombre elbNombre servicioNombre"; exit 1; }
-[ -z "$3" ] && { echo "Parametros: \n$0 repoNombre entornoNombre elbNombre servicioNombre"; exit 1; }
-[ -z "$4" ] && { echo "Parametros: \n$0 repoNombre entornoNombre elbNombre servicioNombre"; exit 1; }
+parametros="Parametros: \n$0 repoNombre entornoNombre elbNombre servicioNombre"
+
+[ $# -lt 4  ] && { echo $parametros; exit 1; }
 
 repoNombre=$1
 entornoNombre=$2
