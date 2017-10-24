@@ -1,5 +1,5 @@
 {
-    "LoadBalancerName": "grapes-elb2", 
+    "LoadBalancerName": "restserviceelb", 
     "Listeners": [
         {
             "Protocol": "HTTP", 
