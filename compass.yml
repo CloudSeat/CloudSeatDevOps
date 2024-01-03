@@ -1,0 +1,17 @@
+name: CloudSeatDevOps
+id: ari:cloud:compass:707956e4-9a53-4de1-9486-8da34cc42d43:component/094b78fa-a706-4074-becd-dafa21ab47b7/ee114fbd-cfb2-41f4-ba7a-a06310fc4de1
+description: Repository containing the script for a complete cloud deployment in AWS
+configVersion: 1
+typeId: SERVICE
+fields:
+  tier: 4
+links:
+  - name: null
+    type: REPOSITORY
+    url: https://github.com/CloudSeat/CloudSeatDevOps
+relationships:
+  DEPENDS_ON: []
+labels:
+  - language:shell
+  - source:github
+customFields: null
